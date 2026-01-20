@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Order Details - #ORD-2024-1234</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+            integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        >
+        <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, rgba(255, 166, 0, 0.774) 0%, orange 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .order-number {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .status-section {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .status-badge {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .progress-tracker {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .progress-tracker::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.3);
+            z-index: 0;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            height: 3px;
+            background: white;
+            width: 50%;
+            z-index: 1;
+            transition: width 0.5s ease;
+        }
+
+        .progress-step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.completed .step-circle {
+            background: white;
+            color: #f5576c;
+        }
+
+        .progress-step.active .step-circle {
+            background: white;
+            color: #f5576c;
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);
+        }
+
+        .step-label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .info-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .info-card h3 {
+            color: #667eea;
+            font-size: 14px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-card p {
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 5px;
+        }
+
+        .items-section {
+            margin-top: 30px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .order-item {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .order-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+        }
+
+        .item-image {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 40px;
+            flex-shrink: 0;
+        }
+
+        .item-image img{
+            width: 100%;
+            height: 100%;
+        }
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .item-meta {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .item-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: #667eea;
+            margin-top: 10px;
+        }
+
+        .summary-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+            font-size: 20px;
+            font-weight: 700;
+            color: #667eea;
+            padding-top: 20px;
+            margin-top: 10px;
+            border-top: 2px solid #667eea;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+ .back-btn{
+    position: fixed;
+    right: 30px;
+    bottom: 10px;
+    background-color: orange;
+    padding: 10px 20px;
+     font-family: 'Poppins', sans-serif;
+    border-radius: 6px;
+    border: none;
+    border: 1px solid black;
+    cursor: pointer;
+ }
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+        @media only screen and (min-width:300px) and (max-width:400px){
+            body{
+                padding: 0px;
+            }
+            .content{
+                padding: 10px;
+            }
+            .status-section{
+                padding: 10px 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .order-item {
+                flex-direction: column;
+            }
+
+            .item-image {
+                width: 80px;
+                height: 80px;
+                font-size: 30px;
+            }
+
+            .progress-tracker {
+                font-size: 11px;
+            }
+
+            .step-circle {
+                width: 30px;
+                height: 30px;
+                font-size: 14px;
+            }
+        }
+        </style>
+    </head>
+    <body>
+        <button class="back-btn" onclick="closeOrder()">
+            <i class="fa-solid fa-arrow-left-long"></i>
+            Back
+        </button>
+        <div class="container">
+            <div class="header">
+                <h1>Order Details</h1>
+                <div class="order-number">Order #ORD-2024-1234</div>
+            </div>
+            <div class="content">
+                <div class="status-section">
+                    <div class="status-header">
+                        <h2>Order Status</h2>
+                        <span class="status-badge">In Transit</span>
+                    </div>
+                    <div class="progress-tracker">
+                        <div class="progress-line"></div>
+                        <div class="progress-step completed">
+                            <div class="step-circle">✓</div>
+                            <div class="step-label">Order Placed</div>
+                        </div>
+                        <div class="progress-step completed">
+                            <div class="step-circle">✓</div>
+                            <div class="step-label">Processing</div>
+                        </div>
+                        <div class="progress-step active">
+                            <div class="step-circle">🚚</div>
+                            <div class="step-label">In Transit</div>
+                        </div>
+                        <div class="progress-step">
+                            <div class="step-circle">📦</div>
+                            <div class="step-label">Delivered</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>📅 Order Date</h3>
+                        <p>January 5, 2026</p>
+                        <p>10:30 AM</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>🚚 Estimated Delivery</h3>
+                        <p>January 12-14, 2026</p>
+                        <p>
+                            Track:
+                            <strong>TRK123456789</strong>
+                        </p>
+                    </div>
+                    <div class="info-card">
+                        <h3>📍 Shipping Address</h3>
+                        <p>
+                            <strong>John Doe</strong>
+                        </p>
+                        <p>123 Main Street, Apt 4B</p>
+                        <p>New York, NY 10001</p>
+                        <p>Phone: (555) 123-4567</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>💳 Payment Method</h3>
+                        <p>Visa ending in 4242</p>
+                        <p>
+                            Status:
+                            <strong>Paid</strong>
+                        </p>
+                    </div>
+                </div>
+                <div class="items-section">
+                    <h2 class="section-title">Order Items</h2>
+                    <div class="order-item">
+                        <div class="item-image">
+                            <img src="https://m.media-amazon.com/images/I/71JGCn1z1TL._SX679_.jpg" alt="">
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name">iPhone 17 Pro</div>
+                            <div class="item-meta">Color: orange</div>
+                            <div class="item-meta">Quantity: 1</div>
+                            <div class="item-price">Rs.152000</div>
+                        </div>
+                    </div>
+                    <div class="order-item">
+                        <div class="item-image">
+                            <img src="https://m.media-amazon.com/images/I/71HXmuKbKkL._SY450_.jpg" alt="">
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name">acer 109 cm</div>
+                            <div class="item-meta">Color: Dark | Size: 32cm</div>
+                            <div class="item-meta">Quantity: 1</div>
+                            <div class="item-price">Rs.23999</div>
+                        </div>
+                    </div>
+                    <div class="order-item">
+                        <div class="item-image">
+                            <img src="https://m.media-amazon.com/images/I/71H9R4OoBOL._SX679_.jpg" alt="">
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name">HP 15</div>
+                            <div class="item-meta">Color: Silver&Black | Size: 16cm</div>
+                            <div class="item-meta">Quantity: 1</div>
+                            <div class="item-price">Rs.45999</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="summary-section">
+                    <h2 class="section-title">Order Summary</h2>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>Rs.449923</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span>Rs1112</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax</span>
+                        <span>Rs.2452</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Discount (SAVE20)</span>
+                        <span>-Rs.5499</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Total</span>
+                        <span>Rs.416490</span>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button class="btn btn-primary">Track Package</button>
+                    <button class="btn btn-secondary">Download Invoice</button>
+                    <button class="btn btn-secondary">Contact Support</button>
+                </div>
+            </div>
+        </div>
+        <script>
+            function closeOrder(){
+                location.href="./index.html"
+            }
+        </script>
+    </body>
+</html>

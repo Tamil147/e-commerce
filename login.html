@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Anon Login</title>
+        <link rel="stylesheet" href="./assets/css/loginandregister.css">
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+            integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        >
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="register-page">
+            <div class="form-container">
+                <div class="form-left">
+                    <h2>SignIn Account</h2>
+                    <p class="subtitle">Start shopping today get more Offers!</p>
+                    <form>
+                        <div class="input-group">
+                            <label for="name">Username</label>
+                            <div class="input-wrapper">
+                                <input type="text" placeholder="Enter your username" id="name">
+                                <i class="fas fa-user icon-left"></i>
+                                <i class="fas fa-check-circle icon-right" id="success"></i>
+                                <i class="fas fa-exclamation-circle icon-right" id="error"></i>
+                            </div>
+                            <p class="error-msg"></p>
+                        </div>
+                        <div class="input-group">
+                            <label for="password">Password</label>
+                            <div class="input-wrapper">
+                                <input type="password" placeholder="Create a strong password" id="password">
+                                <i class="fas fa-lock icon-left"></i>
+                                <i class="fas fa-check-circle icon-right" id="success"></i>
+                                <i class="fas fa-exclamation-circle icon-right" id="error"></i>
+                            </div>
+                            <p class="error-msg"></p>
+                            <h3 onclick="openForget()">Forget Password?</h3>
+                        </div>
+                        <button type="submit">Sign In</button>
+                        <div class="social-login">
+                            <div class="divider">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="login-link">
+                            Don't have an account yet?
+                            <a href="./register.html">Sign Up</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="forget-pass">
+                <form id="forget-form">
+                    <h2 style="text-align: center; margin-bottom: 10px;">Forget Password</h2>
+                    <div class="input-group">
+                        <label for="name">New Password</label>
+                        <div class="input-wrapper">
+                            <input type="text" placeholder="Enter your username" id="new-password">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="name">Confirm Password</label>
+                        <div class="input-wrapper">
+                            <input type="text" placeholder="Enter your username" id="confirm-password">
+                        </div>
+                    </div>
+                    <p class="forget-msg"></p>
+                    <button type="submit">Change Password</button>
+                </form>
+                <button class="back-btn" onclick="closeForget()">
+                    <i class="fa-solid fa-arrow-left-long"></i> Back
+                </button>
+            </div>
+            <div class="toast-success success">
+                <div class="toast-icon">✓</div>
+                <div class="toast-content">
+                    <div class="toast-title">Success!</div>
+                    <div class="toast-message" >Login successfully .</div>
+                </div>
+                <div class="toast-close">×</div>
+            </div>
+        </div>
+        <script src="./assets/js/login.js"></script>
+    </body>
+</html>

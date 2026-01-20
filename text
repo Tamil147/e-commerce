@@ -1,0 +1,6 @@
+<i class="fa-regular fa-user"></i>
+                            <div class="user-menu">
+                                <li onClick="openAccount()">Account</li>
+                                <li onClick="openOrder()">Orders</li>
+                                <li onclick="logOut()">Logout</li>
+                            </div>
