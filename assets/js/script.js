@@ -1317,16 +1317,16 @@ let userInfo = document.getElementById("user-info")
 // let singleData = []
 JSON.parse(localStorage.getItem("cart")) == null ? localStorage.setItem("cart", "[]") : localStorage.getItem("cart")
 // localStorage.removeItem("cart")
-console.log(JSON.parse(localStorage.getItem("user")));
+
 
 let user = JSON.parse(localStorage.getItem("user"))
 
-user.login ? userInfo.innerHTML = ` <i class="fa-regular fa-user"></i>
-                            <div class="user-menu">
-                                <li onClick="openAccount()">Account</li>
-                                <li onClick="openOrder()">Orders</li>
-                                <li onclick="logOut()">Logout</li>
-                            </div>`: userInfo.innerHTML = ''
+// user.login ? userInfo.innerHTML = ` <i class="fa-regular fa-user"></i>
+//                             <div class="user-menu">
+//                                 <li onClick="openAccount()">Account</li>
+//                                 <li onClick="openOrder()">Orders</li>
+//                                 <li onclick="logOut()">Logout</li>
+//                             </div>`: userInfo.innerHTML = ''
 
 let newArrivalsContainer = document.querySelector(".new-arrivals")
 let trendingsContainer = document.querySelector('.trending')
